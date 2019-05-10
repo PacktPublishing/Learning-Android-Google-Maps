@@ -1,0 +1,39 @@
+package com.raj.map;
+
+
+import android.app.IntentService;
+import android.content.Intent;
+import android.util.Log;
+
+import com.google.android.gms.location.Geofence;
+import com.google.android.gms.location.GeofencingEvent;
+
+public class GeofenceTransitionService extends IntentService{
+    public GeofenceTransitionService() {
+        super("GEO");
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+    }
+    @Override
+    protected void onHandleIntent(Intent intent) {
+        GeofencingEvent geofencingEvent = GeofencingEvent.fromIntent(intent);
+
+        if (geofencingEvent.hasError()) {
+
+            Log.e("GEO","Error"+ geofencingEvent.getErrorCode());
+        }
+        int geofenceTransition = geofencingEvent.getGeofenceTransition();
+        if (geofenceTransition == Geofence.GEOFENCE_TRANSITION_ENTER ) {
+            Log.d("Update", "Entered Geofence");
+        }else if(
+        geofenceTransition == Geofence.GEOFENCE_TRANSITION_EXIT){
+            Log.d("Update", "Exited Geofence");
+
+        }
+
+
+    }
+}

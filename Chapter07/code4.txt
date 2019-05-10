@@ -1,0 +1,97 @@
+package com.raj.map;
+
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.location.Location;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+
+import com.google.android.gms.common.ConnectionResult;
+import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.android.gms.location.LocationServices;
+
+
+public class MainActivity extends Activity implements
+        GoogleApiClient.ConnectionCallbacks, GoogleApiClient.OnConnectionFailedListener {
+
+
+    GoogleApiClient googleApiClient;
+    Location location;
+    AlertDialog.Builder alertDialog;
+    Button button;
+    double latitude;
+    double longitude;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+        googleApiClient = new GoogleApiClient.Builder(this)
+                .addConnectionCallbacks(this)
+                .addOnConnectionFailedListener(this)
+                .addApi(LocationServices.API)
+                .build();
+        googleApiClient.connect();
+
+        alertDialog = new AlertDialog.Builder(this);
+        alertDialog.setTitle("Location");
+        alertDialog.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        button = (Button)findViewById(R.id.btn);
+        button.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                 
+                if (latitude != 0 && longitude != 0) {
+                    alertDialog.show();
+                }
+
+            }
+        });
+    }
+
+    @Override
+    public void onConnected(Bundle bundle) {
+        location = LocationServices.FusedLocationApi.getLastLocation(
+                googleApiClient);
+        if (location != null) {
+            latitude = location.getLatitude();
+            longitude = location.getLongitude();
+            alertDialog.setMessage("Latitude :" + latitude + "\nLongitude :" + longitude);
+            
+        }
+    }
+
+    @Override
+    public void onConnectionSuspended(int i) {
+        Log.d("Connection","Code : "+i);
+    }
+
+    @Override
+    public void onConnectionFailed(ConnectionResult connectionResult) {
+        Log.d("Connection","Code :"+connectionResult.getErrorCode());
+        try {
+            connectionResult.startResolutionForResult(MapsActivity.this, 1000);
+        } catch (IntentSender.SendIntentException e) {
+            e.printStackTrace();
+        }
+
+    }
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data){
+        if (requestCode == 1000) {
+            if (resultCode == RESULT_OK) {
+                if (!googleApiClient.isConnected()){
+                    googleApiClient.connect();
+                }
+            }
+        }
+
+    }
+}
