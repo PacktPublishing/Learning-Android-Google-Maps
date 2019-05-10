@@ -1,0 +1,90 @@
+package com.raj.map;
+
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
+import android.os.Bundle;
+
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+
+public class MapsActivity extends Activity implements OnMapReadyCallback {
+
+    CharSequence mapSettings[] = { "Zoom Controls", "Compass", "My Location button","Level Picker" };
+    boolean bl[] = new boolean[mapSettings.length];
+    boolean zoom = false;
+    boolean compass = false;
+    boolean location = false;
+    boolean level = false;
+
+    AlertDialog.Builder alert;
+    GoogleMap map;
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_maps);
+        initDialog();
+        MapFragment mapFragment = (MapFragment)getFragmentManager().findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
+    }
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+        map = googleMap;
+        googleMap.setMyLocationEnabled(true);
+        alert.show();
+    }
+
+    public void initDialog(){
+        alert = new AlertDialog.Builder(this);
+        alert.setTitle("Map Settings");
+        alert.setMultiChoiceItems(mapSettings, bl, new  DialogInterface.OnMultiChoiceClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+                if (which == 0) {
+                    zoom = isChecked;
+                } else if (which == 1) {
+                    compass = isChecked;
+                } else if (which == 2) {
+                    location = isChecked;
+                } else if (which == 3) {
+                    level = isChecked;
+                }
+            }
+        });
+        alert.setPositiveButton("Save", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                if (zoom) {
+                    map.getUiSettings().setZoomControlsEnabled(true);
+                } else {
+                    map.getUiSettings().setZoomControlsEnabled(false);
+                }
+                if (compass) {
+                    map.getUiSettings().setCompassEnabled(true);
+                } else {
+                    map.getUiSettings().setCompassEnabled(false);
+                }
+                if (location) {
+                    map.getUiSettings().setMyLocationButtonEnabled(true);
+                } else {
+                    map.getUiSettings().setMyLocationButtonEnabled(false);
+                }
+                if (level) {
+                    map.getUiSettings().setIndoorLevelPickerEnabled(true);
+                } else {
+                    map.getUiSettings().setIndoorLevelPickerEnabled(false);
+                }
+                dialog.dismiss();
+            }
+        });
+        alert.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                dialog.dismiss();
+            }
+        });
+    }
+}
