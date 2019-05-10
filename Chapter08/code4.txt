@@ -1,0 +1,29 @@
+package com.raj.map;
+
+import android.os.Bundle;
+import android.support.v4.app.FragmentActivity;
+
+import com.google.android.gms.maps.OnStreetViewPanoramaReadyCallback;
+import com.google.android.gms.maps.StreetViewPanorama;
+import com.google.android.gms.maps.SupportStreetViewPanoramaFragment;
+import com.google.android.gms.maps.model.LatLng;
+
+
+public class MapsActivity extends FragmentActivity implements OnStreetViewPanoramaReadyCallback {
+
+    static final LatLng NEWARK = new LatLng(40.735188, -74.172414);
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_maps);
+        SupportStreetViewPanoramaFragment streetViewPanoramaFragment = (SupportStreetViewPanoramaFragment) getSupportFragmentManager().findFragmentById(R.id.map);
+        streetViewPanoramaFragment.getStreetViewPanoramaAsync(this);
+    }
+
+    @Override
+    public void onStreetViewPanoramaReady(StreetViewPanorama panorama) {
+        panorama.setPosition(NEWARK);
+    }
+}

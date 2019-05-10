@@ -1,0 +1,78 @@
+package com.raj.map;
+
+import android.app.Activity;
+import android.app.Dialog;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+
+import com.google.android.gms.maps.OnStreetViewPanoramaReadyCallback;
+import com.google.android.gms.maps.StreetViewPanorama;
+import com.google.android.gms.maps.StreetViewPanoramaFragment;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.StreetViewPanoramaCamera;
+import com.google.android.gms.maps.model.StreetViewPanoramaOrientation;
+
+
+public class MapsActivity extends Activity implements OnStreetViewPanoramaReadyCallback {
+
+    Dialog cameraDialog;
+    EditText zoom,tilt,bearing;
+    Button move_camera;
+
+    static final LatLng AGRA = new LatLng(27.174356, 78.042183);
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_maps);
+        StreetViewPanoramaFragment streetViewPanoramaFragment = (StreetViewPanoramaFragment) getFragmentManager().findFragmentById(R.id.map);
+        streetViewPanoramaFragment.getStreetViewPanoramaAsync(this);
+        cameraDialog = new Dialog(this);
+        cameraDialog.setTitle("Move Camera");
+        cameraDialog.setContentView(R.layout.dialog_camera);
+
+        zoom = (EditText)cameraDialog.findViewById(R.id.zoom);
+        tilt = (EditText)cameraDialog.findViewById(R.id.tilt);
+        bearing = (EditText)cameraDialog.findViewById(R.id.bearing);
+        move_camera = (Button)cameraDialog.findViewById(R.id.button);
+    }
+
+    @Override
+    public void onStreetViewPanoramaReady(final StreetViewPanorama panorama) {
+        panorama.setPosition(AGRA);
+        panorama.setOnStreetViewPanoramaClickListener(new StreetViewPanorama.OnStreetViewPanoramaClickListener() {
+            @Override
+            public void onStreetViewPanoramaClick(StreetViewPanoramaOrientation streetViewPanoramaOrientation) {
+                cameraDialog.show();
+            }
+        });
+
+        move_camera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String zoomText = zoom.getText().toString();
+                String tiltText = tilt.getText().toString();
+                String bearingText = bearing.getText().toString();
+                
+if (!TextUtils.isEmpty(zoomText) && !TextUtils.isEmpty(tiltText) & !TextUtils.isEmpty(bearingText)) {
+                                  try {
+                    StreetViewPanoramaCamera camera = new StreetViewPanoramaCamera.Builder()
+                            .zoom(Float.valueOf(zoomText))
+                            .bearing(Float.valueOf(tiltText))
+                            .tilt(Float.valueOf(bearingText))
+                            .build();
+                    panorama.animateTo(camera, 500);
+                    cameraDialog.dismiss();
+                 } catch (NumberFormatException nfe) {
+                        Log.d("Map", "Number Format Error");
+                        cameraDialog.dismiss();
+                    }
+
+                }
+            }
+        });
+    }
+}
