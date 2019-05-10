@@ -1,0 +1,40 @@
+package com.raj.map;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+
+public class MapsActivity extends Activity implements OnMapReadyCallback {
+    static final LatLng NEWARK = new LatLng(40.735188, -74.172414);
+    Button btn;
+
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_maps);
+        MapFragment mapFragment = (MapFragment) getFragmentManager().findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
+        btn = (Button)findViewById(R.id.button);
+
+    }
+    @Override
+    public void onMapReady(final GoogleMap map) {
+
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                map.moveCamera(CameraUpdateFactory.newLatLngZoom(NEWARK,4));
+            }
+        });
+
+    }
+}

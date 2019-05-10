@@ -1,0 +1,65 @@
+package com.raj.map;
+
+import android.app.Activity;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.View;
+import android.widget.Button;
+
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.CameraPosition;
+import com.google.android.gms.maps.model.LatLng;
+
+
+public class MapsActivity extends Activity implements OnMapReadyCallback {
+    static final LatLng LONDON= new LatLng(51.519029, -0.130094);
+    Button start,stop;
+
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_maps);
+        MapFragment mapFragment = (MapFragment)getFragmentManager().findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
+
+        start = (Button)findViewById(R.id.btn_start);
+        stop = (Button)findViewById(R.id.btn_stop);
+
+    }
+    @Override
+    public void onMapReady(final GoogleMap map) {
+
+     final CameraPosition cameraPosition = new CameraPosition.Builder().
+                target(LONDON).
+                zoom(8).
+                build();
+        start.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition),2000, new GoogleMap.CancelableCallback() {
+                    @Override
+                    public void onFinish() {
+                        Log.d("Map", "Animation finished");
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        Log.d("Map", "Animation interrupted");
+                    }
+                });
+            }
+        });
+        stop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                map.stopAnimation();
+            }
+        });
+    }
+}

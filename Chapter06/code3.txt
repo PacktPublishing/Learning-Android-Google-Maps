@@ -1,0 +1,29 @@
+package com.raj.map;
+
+import android.app.Activity;
+import android.graphics.Point;
+import android.os.Bundle;
+
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+
+public class MapsActivity extends Activity {
+
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_maps);
+        MapFragment mapFragment = (MapFragment) getFragmentManager()
+                .findFragmentById(R.id.map);
+
+        GoogleMap map = mapFragment.getMap();
+ if (map != null) {	
+        map.moveCamera(CameraUpdateFactory.zoomBy(6,new Point(1050,800)));
+        }
+
+    }
+
+}
