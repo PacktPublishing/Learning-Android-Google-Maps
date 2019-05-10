@@ -1,0 +1,16 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/action_normal"
+        android:title="Normal"/>
+    <item
+        android:id="@+id/action_satellite"
+        android:title="Satellite"/>
+    <item
+        android:id="@+id/action_hydrid"
+        android:title="Hybrid"/>
+    <item
+        android:id="@+id/action_terrain"
+        android:title="Terrain"/>
+
+</menu>
