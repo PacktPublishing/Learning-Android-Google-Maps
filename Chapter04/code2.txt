@@ -1,0 +1,31 @@
+package com.raj.map;
+
+import android.app.Activity;
+import android.os.Bundle;
+
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
+
+public class MapsActivity extends Activity implements OnMapReadyCallback {
+
+    static final LatLng NEWARK = new LatLng(40.735188, -74.172414);
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_maps);
+        MapFragment mapFragment = (MapFragment)getFragmentManager().findFragmentById(R.id.map);
+        mapFragment.getMapAsync(this);
+
+    }
+    @Override
+    public void onMapReady(GoogleMap map) {
+
+       map.addMarker(new MarkerOptions().position(NEWARK));
+
+    }
+}
