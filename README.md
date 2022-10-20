@@ -1,4 +1,5 @@
-# Learning Android Google Maps
+
+            # Learning Android Google Maps
 
 <a href="https://www.packtpub.com/application-development/learning-android-google-maps?utm_source=github&utm_medium=repository&utm_campaign=9781849698863 "><img src="https://d1ldz4te4covpm.cloudfront.net/sites/default/files/imagecache/ppv4_main_book_cover/B00100_Learning%20Android%20Google%20Maps_.jpg" alt="Learning Android Google Maps" height="256px" align="right"></a>
 
@@ -55,3 +56,11 @@ has almost three years real-time working experience with Android technology and 
 [Click here](https://docs.google.com/forms/d/e/1FAIpQLSdy7dATC6QmEL81FIUuymZ0Wy9vH1jHkvpY57OiMeKGqib_Ow/viewform) if you have any feedback or suggestions.
 
 
+ 
+
+
+            If you have already purchased a print or Kindle version of this book, you can get a DRM-free PDF version at no cost.
+            <br>Simply scan the QR code or click on the link to download a free PDF copy of this book.
+            
+ <p align="center"> <img width="250px" src="9781849698863.png" /> </p> <p align="center"> <a href="https://packt.link/free-ebook/9781849698863">https://packt.link/free-ebook/9781849698863 </a> </p>
+        
