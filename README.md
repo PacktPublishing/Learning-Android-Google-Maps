@@ -63,3 +63,6 @@ has almost three years real-time working experience with Android technology and 
             <br>Simply scan the QR code or click on the link to download a free PDF copy of this book.
             
  <p align="center"> <img width="250px" src="9781849698863.png" /> </p> <p align="center"> <a href="https://packt.link/free-ebook/9781849698863">https://packt.link/free-ebook/9781849698863 </a> </p>
+
+ If you have already purchased a print or Kindle version of this book, you can get a DRM-free PDF version at no cost.<br>Simply scan the QR code or click on the link to download a free PDF copy of this book.
+<p align="center"> <img width="250px" src="9781849698863.png" /> </p> <p align="center"> <a href="https://packt.link/free-ebook/9781849698863">https://packt.link/free-ebook/9781849698863 </a> </p>
